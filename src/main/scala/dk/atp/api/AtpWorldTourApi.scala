@@ -34,7 +34,7 @@ object AtpWorldTourApi {
    *
    */
   case class FirstServeFact(pctWon: Double, matches: Int)
-  case class FirstServeFacts(firstServeFacts: List[FirstServeFact])
+  case class FirstServeFacts(playerFacts: List[FirstServeFact])
 
   /**
    * @param firstName
@@ -45,7 +45,7 @@ object AtpWorldTourApi {
    * @param matches Total number of matches
    */
   case class PointWonFact(firstName: String, lastName: String, pointsWon: Int, totalPoints: Int, pctWon: Double, matches: Int)
-  case class PointWonFacts(pointWonFacts: List[PointWonFact])
+  case class PointWonFacts(playerFacts: List[PointWonFact])
 
 }
 
