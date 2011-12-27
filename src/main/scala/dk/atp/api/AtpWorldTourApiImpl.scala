@@ -14,6 +14,6 @@ class AtpWorldTourApiImpl extends AtpWorldTourApi {
   def firstServeFacts(surface: SurfaceEnum, year: Int): FirstServeFacts = throw new UnsupportedOperationException("Not implemented yet.")
 
   /**Match facts statistics http://www.atpworldtour.com/Matchfacts/Matchfacts-Landing.aspx*/
-  def pointWonFacts(pointWonFact: PointWonFactEnum, surface: SurfaceEnum, year: Int): PointWonStats = throw new UnsupportedOperationException("Not implemented yet.")
+  def pointWonFacts(pointWonFact: PointWonFactEnum, surface: SurfaceEnum, year: Int): PointWonFacts = throw new UnsupportedOperationException("Not implemented yet.")
 
 }

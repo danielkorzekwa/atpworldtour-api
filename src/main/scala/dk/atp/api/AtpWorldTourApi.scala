@@ -29,6 +29,14 @@ object AtpWorldTourApi {
   }
 
   /**
+   * @param pctWon Percentage of first serve won
+   * @param matches Total number of matches
+   *
+   */
+  case class FirstServeFact(pctWon: Double, matches: Int)
+  case class FirstServeFacts(firstServeFacts: List[FirstServeFact])
+
+  /**
    * @param firstName
    * @param lastName
    * @param pointsWon Number of points won
@@ -37,15 +45,8 @@ object AtpWorldTourApi {
    * @param matches Total number of matches
    */
   case class PointWonFact(firstName: String, lastName: String, pointsWon: Int, totalPoints: Int, pctWon: Double, matches: Int)
-  case class PointWonStats(pointWonFacts: List[PointWonFact])
+  case class PointWonFacts(pointWonFacts: List[PointWonFact])
 
-  /**
-   * @param pctWon Percentage of first serve won
-   * @param matches Total number of matches
-   *
-   */
-  case class FirstServeFact(pctWon: Double, matches: Int)
-  case class FirstServeFacts(firstServeFacts: List[FirstServeFact])
 }
 
 import AtpWorldTourApi.PointWonFactEnum._
@@ -57,6 +58,6 @@ trait AtpWorldTourApi {
   def firstServeFacts(surface: SurfaceEnum, year: Int): FirstServeFacts
 
   /**Match facts statistics http://www.atpworldtour.com/Matchfacts/Matchfacts-Landing.aspx*/
-  def pointWonFacts(pointWonFact: PointWonFactEnum, surface: SurfaceEnum, year: Int): PointWonStats
+  def pointWonFacts(pointWonFact: PointWonFactEnum, surface: SurfaceEnum, year: Int): PointWonFacts
 
 }
