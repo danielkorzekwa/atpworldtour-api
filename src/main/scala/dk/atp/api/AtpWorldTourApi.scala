@@ -18,33 +18,34 @@ object AtpWorldTourApi {
 
     override def toString() = PointWonFactEnum.values.mkString("MatchfactEnum [", ", ", "]")
   }
-
+  
   object SurfaceEnum extends Enumeration {
     type SurfaceEnum = Value
-    val CLAY = Value("1")
-    val GRASS = Value("2")
-    val HARD = Value("3")
+    val CLAY = Value(1)
+    val GRASS = Value(2)
+    val HARD = Value(3)
 
     override def toString() = SurfaceEnum.values.mkString("SurfaceEnum [", ", ", "]")
   }
 
   /**
+   * @param rank
+   * @param fullName
    * @param pctWon Percentage of first serve won
    * @param matches Total number of matches
    *
    */
-  case class FirstServeFact(pctWon: Double, matches: Int)
+  case class FirstServeFact(rank:Int,fullName: String, pctWon: Double, matches: Int)
   case class FirstServeFacts(playerFacts: List[FirstServeFact])
 
   /**
-   * @param firstName
-   * @param lastName
+   * @param fullName
    * @param pointsWon Number of points won
    * @param totalPoints Total number of points
    * @param pctWon Percentage of matches won
    * @param matches Total number of matches
    */
-  case class PointWonFact(firstName: String, lastName: String, pointsWon: Int, totalPoints: Int, pctWon: Double, matches: Int)
+  case class PointWonFact(fullName: String, pointsWon: Int, totalPoints: Int, pctWon: Double, matches: Int)
   case class PointWonFacts(playerFacts: List[PointWonFact])
 
 }
