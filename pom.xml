@@ -11,6 +11,25 @@
 	<inceptionYear>2011</inceptionYear>
 	<url>https://github.com/danielkorzekwa/atpworldtour-api</url>
 
+	<distributionManagement>
+		<repository>
+			<id>dk-maven2-repo-releases</id>
+			<name>dk-maven2 maven repository (releases)</name>
+			<url>
+                                svn:https://dk-maven2-repo.googlecode.com/svn/maven-repo/releases
+                        </url>
+			<uniqueVersion>false</uniqueVersion>
+		</repository>
+		<snapshotRepository>
+			<id>dk-maven2-repo-snapshots</id>
+			<name>dk-maven2 maven repository (snapshots)</name>
+			<url>
+                                svn:https://dk-maven2-repo.googlecode.com/svn/maven-repo/snapshots
+                        </url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<!-- Properties -->
 	<properties>
 		<scala.version>2.9.1</scala.version>
@@ -36,6 +55,14 @@
 	</pluginRepositories>
 
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.jvnet.wagon-svn</groupId>
+				<artifactId>wagon-svn</artifactId>
+				<version>1.9</version>
+			</extension>
+		</extensions>
+
 		<sourceDirectory>src/main/scala</sourceDirectory>
 		<testSourceDirectory>src/test/scala</testSourceDirectory>
 
@@ -116,54 +143,54 @@
 		</plugins>
 	</reporting>
 
-    <profiles>
-      <profile>
-        <id>coverage</id>
-        <repositories>
-          <repository>
-            <id>scct repository</id>
-            <url>http://mtkopone.github.com/scct/maven-repo</url>
-          </repository>
-        </repositories>
-        <dependencies>
-          <dependency>
-            <groupId>reaktor</groupId>
-            <artifactId>scct_2.9.1</artifactId>
-            <version>0.1-SNAPSHOT</version>
-          </dependency>
-        </dependencies>
-        <build>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-surefire-plugin</artifactId>
-              <version>2.6</version>
-              <configuration>
-                <systemPropertyVariables>
-                  <scct.project.name>${project.name}</scct.project.name>
-                  <scct.coverage.file>${project.build.outputDirectory}/coverage.data</scct.coverage.file>
-                  <scct.report.dir>${project.build.directory}/coverage-report</scct.report.dir>
-                  <scct.source.dir>${project.build.sourceDirectory}</scct.source.dir>
-                </systemPropertyVariables>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.scala-tools</groupId>
-              <artifactId>maven-scala-plugin</artifactId>
-              <configuration>
-                <compilerPlugins>
-                  <compilerPlugin>
-                    <groupId>reaktor</groupId>
-                    <artifactId>scct_2.9.1</artifactId>
-                    <version>0.1-SNAPSHOT</version>
-                  </compilerPlugin>
-                </compilerPlugins>
-              </configuration>
-            </plugin>        
-          </plugins>
-        </build>
-      </profile>
-    </profiles>
+	<profiles>
+		<profile>
+			<id>coverage</id>
+			<repositories>
+				<repository>
+					<id>scct repository</id>
+					<url>http://mtkopone.github.com/scct/maven-repo</url>
+				</repository>
+			</repositories>
+			<dependencies>
+				<dependency>
+					<groupId>reaktor</groupId>
+					<artifactId>scct_2.9.1</artifactId>
+					<version>0.1-SNAPSHOT</version>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.6</version>
+						<configuration>
+							<systemPropertyVariables>
+								<scct.project.name>${project.name}</scct.project.name>
+								<scct.coverage.file>${project.build.outputDirectory}/coverage.data</scct.coverage.file>
+								<scct.report.dir>${project.build.directory}/coverage-report</scct.report.dir>
+								<scct.source.dir>${project.build.sourceDirectory}</scct.source.dir>
+							</systemPropertyVariables>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.scala-tools</groupId>
+						<artifactId>maven-scala-plugin</artifactId>
+						<configuration>
+							<compilerPlugins>
+								<compilerPlugin>
+									<groupId>reaktor</groupId>
+									<artifactId>scct_2.9.1</artifactId>
+									<version>0.1-SNAPSHOT</version>
+								</compilerPlugin>
+							</compilerPlugins>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<!-- Dependency management -->
 	<dependencies>
