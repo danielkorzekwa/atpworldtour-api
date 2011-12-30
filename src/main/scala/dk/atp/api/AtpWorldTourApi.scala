@@ -62,8 +62,10 @@ object AtpWorldTourApi {
    * @param secondServeWonPct Percentage of points won on second serve.
    * @param firstReturnWonPct Percentage of points won on first serve return.
    * @param secondReturnWonPct Percentage of points won on second serve return.
+   * @param serviceGamesPlayed Number of service games played.
+   * @param returnGamesPlayed Number of return games played.
    */
-  case class PlayerFacts(firstServePct:Double,firstServeWonPct:Double,secondServeWonPct:Double,firstReturnWonPct:Double,secondReturnWonPct:Double)
+  case class PlayerFacts(firstServePct:Double,firstServeWonPct:Double,secondServeWonPct:Double,firstReturnWonPct:Double,secondReturnWonPct:Double, serviceGamesPlayed:Int,returnGamesPlayed:Int)
 
 }
 

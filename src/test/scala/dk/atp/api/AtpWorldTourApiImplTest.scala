@@ -124,17 +124,23 @@ class AtpWorldTourApiImplTest {
   /**Tests for playerFacts.*/
   @Test def playeFacts_surface {
 
-    assertEquals(PlayerFacts(63, 75, 57, 35, 50), atpApi.playerFacts("Roger Federer", SurfaceEnum.CLAY, 2010))
-    assertEquals(PlayerFacts(64, 78, 57, 28, 54), atpApi.playerFacts("Roger Federer", SurfaceEnum.GRASS, 2010))
-    assertEquals(PlayerFacts(61, 79, 56, 35, 50), atpApi.playerFacts("Roger Federer", SurfaceEnum.HARD, 2010))
+    assertEquals(PlayerFacts(63, 75, 57, 35, 50, 175, 175), atpApi.playerFacts("Roger Federer", SurfaceEnum.CLAY, 2010))
+    assertEquals(PlayerFacts(64, 78, 57, 28, 54, 146, 144), atpApi.playerFacts("Roger Federer", SurfaceEnum.GRASS, 2010))
+    assertEquals(PlayerFacts(61, 79, 56, 35, 50, 659, 632), atpApi.playerFacts("Roger Federer", SurfaceEnum.HARD, 2010))
   }
 
   @Test def playeFacts_year {
-    assertEquals(PlayerFacts(63, 75, 57, 35, 50), atpApi.playerFacts("Roger Federer", SurfaceEnum.CLAY, 2010))
-    assertEquals(PlayerFacts(60, 79, 57, 33, 50), atpApi.playerFacts("Roger Federer", SurfaceEnum.CLAY, 2009))
+    assertEquals(PlayerFacts(63, 75, 57, 35, 50, 175, 175), atpApi.playerFacts("Roger Federer", SurfaceEnum.CLAY, 2010))
+    assertEquals(PlayerFacts(60, 79, 57, 33, 50, 251, 244), atpApi.playerFacts("Roger Federer", SurfaceEnum.CLAY, 2009))
   }
 
   @Test def playeFacts_diffrent_players {
-    assertEquals(PlayerFacts(74, 68, 59, 36, 54), atpApi.playerFacts("Juan Carlos Ferrero", SurfaceEnum.CLAY, 2010))
+    assertEquals(PlayerFacts(74, 68, 59, 36, 54, 397, 398), atpApi.playerFacts("Juan Carlos Ferrero", SurfaceEnum.CLAY, 2010))
+    assertEquals(PlayerFacts(62, 75, 47, 30, 49, 153, 156), atpApi.playerFacts("Milos Raonic", SurfaceEnum.CLAY, 2011))
+    assertEquals(PlayerFacts(0, 0, 0, 0, 0, 0, 0), atpApi.playerFacts("Milos Raonic", SurfaceEnum.CLAY, 2010))
+  }
+
+  @Test(expected = classOf[IllegalArgumentException]) def playeFacts_no_data_available {
+    assertEquals(PlayerFacts(0, 0, 0, 0, 0, 0, 0), atpApi.playerFacts("Milos Raonic", SurfaceEnum.CLAY, 2009))
   }
 }

@@ -75,14 +75,18 @@ class AtpWorldTourApiImpl(timeout: Int = 5000) extends AtpWorldTourApi {
 
     val factLeftDiv = doc.getElementsByClass("bioMatchfactsCol")
     val factRightDiv = doc.getElementsByClass("bioMatchfactsCol2")
-
-    val firstServePct = factLeftDiv.first().getElementsMatchingOwnText("^1st Serve$").text().split("%")(0).toDouble
-    val firstServeWonPct = factLeftDiv.first().getElementsMatchingOwnText("^1st Serve Points Won$").text().split("%")(0).toDouble
-    val secondServeWonPct = factLeftDiv.first().getElementsMatchingOwnText("^2nd Serve Points Won$").text().split("%")(0).toDouble
-
-    val firstReturnWonPct = factRightDiv.first().getElementsMatchingOwnText("^1st Serve Return Points Won$").text().split("%")(0).toDouble
-    val secondReturnWonPct = factRightDiv.first().getElementsMatchingOwnText("^2nd Serve Return Points Won$").text().split("%")(0).toDouble
     
-    PlayerFacts(firstServePct, firstServeWonPct, secondServeWonPct, firstReturnWonPct, secondReturnWonPct)
+    require(factLeftDiv.first()!=null && factLeftDiv.first().getElementsMatchingOwnText("^1st Serve$")!=null,"No data available or wrong data format.")
+    
+    val firstServePct = factLeftDiv.first().getElementsMatchingOwnText("^1st Serve$").text().split("%")(0).toDouble
+    val firstServeWonPct = factLeftDiv.first().getElementsMatchingOwnText("^1st Serve Points Won$").first().getElementsByTag("span").text.split("%")(0).toDouble
+    val secondServeWonPct = factLeftDiv.first().getElementsMatchingOwnText("^2nd Serve Points Won$").first().getElementsByTag("span").text.split("%")(0).toDouble
+    val serviceGamesPlayed =  factLeftDiv.first().getElementsMatchingOwnText("^Service Games Played$").first().getElementsByTag("span").text.toInt
+    
+    val firstReturnWonPct = factRightDiv.first().getElementsMatchingOwnText("^1st Serve Return Points Won$").first().getElementsByTag("span").text.split("%")(0).toDouble
+    val secondReturnWonPct = factRightDiv.first().getElementsMatchingOwnText("^2nd Serve Return Points Won$").first().getElementsByTag("span").text.split("%")(0).toDouble
+     val returnGamesPlayed =  factRightDiv.first().getElementsMatchingOwnText("^Return Games Played$").first().getElementsByTag("span").text.toInt
+  
+    PlayerFacts(firstServePct, firstServeWonPct, secondServeWonPct, firstReturnWonPct, secondReturnWonPct,serviceGamesPlayed,returnGamesPlayed)
   }
 }
