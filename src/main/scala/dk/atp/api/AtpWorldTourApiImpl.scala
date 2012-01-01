@@ -8,6 +8,7 @@ import SurfaceEnum.SurfaceEnum
 import SurfaceEnum._
 import org.jsoup.select.Elements
 import org.jsoup.nodes.Element
+import org.jsoup.nodes._
 
 /**
  * API interface for atpworldtour.com tennis statistics.
@@ -22,7 +23,7 @@ class AtpWorldTourApiImpl(timeout: Int = 5000) extends AtpWorldTourApi {
   def firstServeFacts(surface: SurfaceEnum, year: Int): FirstServeFacts = {
 
     val atpQuery = "http://www.atpworldtour.com/Matchfacts/Matchfacts-List.aspx?c=1&s=%s&y=%s".format(surface.id, year)
-    val playerFactsSrc = getPlayerFactsSrc(atpQuery)
+    val playerFactsSrc = getPlayersFactsSrc(atpQuery)
 
     val playerFacts: List[FirstServeFact] = playerFactsSrc.map(toFirstServeFact).toList
 
@@ -32,14 +33,14 @@ class AtpWorldTourApiImpl(timeout: Int = 5000) extends AtpWorldTourApi {
   /**Match facts statistics http://www.atpworldtour.com/Matchfacts/Matchfacts-Landing.aspx*/
   def pointWonFacts(pointWonFact: PointWonFactEnum, surface: SurfaceEnum, year: Int): PointWonFacts = {
     val atpQuery = "http://www.atpworldtour.com/Matchfacts/Matchfacts-List.aspx?c=%s&s=%s&y=%s".format(pointWonFact.id, surface.id, year)
-    val playerFactsSrc = getPlayerFactsSrc(atpQuery)
+    val playerFactsSrc = getPlayersFactsSrc(atpQuery)
 
     val playerFacts = playerFactsSrc.map(toPointWonFact).toList
 
     PointWonFacts(playerFacts)
   }
 
-  private def getPlayerFactsSrc(atpQueryUrl: String): Elements = {
+  private def getPlayersFactsSrc(atpQueryUrl: String): Elements = {
     val doc = Jsoup.connect(atpQueryUrl).timeout(timeout).get();
     val factsDiv = doc.getElementsByClass("reliabilityTableModuleInner")
     val factsTable = factsDiv.first().getElementsByTag("tbody")
@@ -69,24 +70,37 @@ class AtpWorldTourApiImpl(timeout: Int = 5000) extends AtpWorldTourApi {
 
   /**Player facts statistics http://www.atpworldtour.com/Tennis/Players/Top-Players/Rafael-Nadal.aspx?t=mf.*/
   def playerFacts(fullName: String, surface: SurfaceEnum, year: Int): PlayerFacts = {
-    val fullNameEncoded = fullName.replace(" ","-")
-    val atpQuery = "http://www.atpworldtour.com/Tennis/Players/Top-Players/%s.aspx?t=mf&y=%s&s=%s#".format(fullNameEncoded,year, surface.id)
-    val doc = Jsoup.connect(atpQuery).timeout(timeout).get();
+    val doc = getPlayerFactsSrc(fullName, surface, year)
 
     val factLeftDiv = doc.getElementsByClass("bioMatchfactsCol")
     val factRightDiv = doc.getElementsByClass("bioMatchfactsCol2")
-    
-    require(factLeftDiv.first()!=null && factLeftDiv.first().getElementsMatchingOwnText("^1st Serve$")!=null,"No data available or wrong data format.")
-    
+
+    require(factLeftDiv.first() != null && factLeftDiv.first().getElementsMatchingOwnText("^1st Serve$") != null, "No data available or wrong data format.")
+
     val firstServePct = factLeftDiv.first().getElementsMatchingOwnText("^1st Serve$").text().split("%")(0).toDouble
     val firstServeWonPct = factLeftDiv.first().getElementsMatchingOwnText("^1st Serve Points Won$").first().getElementsByTag("span").text.split("%")(0).toDouble
     val secondServeWonPct = factLeftDiv.first().getElementsMatchingOwnText("^2nd Serve Points Won$").first().getElementsByTag("span").text.split("%")(0).toDouble
-    val serviceGamesPlayed =  factLeftDiv.first().getElementsMatchingOwnText("^Service Games Played$").first().getElementsByTag("span").text.toInt
-    
+    val serviceGamesPlayed = factLeftDiv.first().getElementsMatchingOwnText("^Service Games Played$").first().getElementsByTag("span").text.toInt
+
     val firstReturnWonPct = factRightDiv.first().getElementsMatchingOwnText("^1st Serve Return Points Won$").first().getElementsByTag("span").text.split("%")(0).toDouble
     val secondReturnWonPct = factRightDiv.first().getElementsMatchingOwnText("^2nd Serve Return Points Won$").first().getElementsByTag("span").text.split("%")(0).toDouble
-     val returnGamesPlayed =  factRightDiv.first().getElementsMatchingOwnText("^Return Games Played$").first().getElementsByTag("span").text.toInt
-  
-    PlayerFacts(firstServePct, firstServeWonPct, secondServeWonPct, firstReturnWonPct, secondReturnWonPct,serviceGamesPlayed,returnGamesPlayed)
+    val returnGamesPlayed = factRightDiv.first().getElementsMatchingOwnText("^Return Games Played$").first().getElementsByTag("span").text.toInt
+
+    PlayerFacts(firstServePct, firstServeWonPct, secondServeWonPct, firstReturnWonPct, secondReturnWonPct, serviceGamesPlayed, returnGamesPlayed)
+  }
+
+  private def getPlayerFactsSrc(fullName: String, surface: SurfaceEnum, year: Int): Document = {
+    val fullNameEncoded = fullName.replace(" ", "-")
+    val atpQuery = "http://www.atpworldtour.com/Tennis/Players/Top-Players/%s.aspx?t=mf&y=%s&s=%s#".format(fullNameEncoded, year, surface.id)
+    val response = Jsoup.connect(atpQuery).timeout(timeout).ignoreHttpErrors(true).execute();
+    val doc = if (response.statusCode() == 200) response.parse() else {
+      val fullNameArray = fullName.split(" ")
+      val surname = fullNameArray.last
+      val firstName = fullNameArray.head
+      val altAtpQuery = atpQuery.replace("Top-Players", surname.subSequence(0,2) + "/" + firstName.first)
+      Jsoup.connect(altAtpQuery).timeout(timeout).get();
+    }
+
+    doc
   }
 }

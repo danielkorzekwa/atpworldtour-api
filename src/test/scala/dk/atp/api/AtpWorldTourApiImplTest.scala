@@ -143,4 +143,15 @@ class AtpWorldTourApiImplTest {
   @Test(expected = classOf[IllegalArgumentException]) def playeFacts_no_data_available {
     assertEquals(PlayerFacts(0, 0, 0, 0, 0, 0, 0), atpApi.playerFacts("Milos Raonic", SurfaceEnum.CLAY, 2009))
   }
+
+  //Use http://www.atpworldtour.com/Tennis/Players/Fa/A/Michael-Russell.aspx instead of http://www.atpworldtour.com/Tennis/Players/Top-Players/Michael-Russell.aspx
+  @Test def playerFacts_otherUrl {
+    assertEquals(PlayerFacts(67, 57, 37, 23, 42, 34, 35), atpApi.playerFacts("Michael Russell", SurfaceEnum.CLAY, 2011))
+
+    assertEquals(PlayerFacts(54, 60, 45, 40, 61, 61, 60), atpApi.playerFacts("Cedrik-Marcel Stebe", SurfaceEnum.CLAY, 2011))
+    assertEquals(PlayerFacts(54, 60, 45, 40, 61, 61, 60), atpApi.playerFacts("Cedrik Marcel Stebe", SurfaceEnum.CLAY, 2011))
+
+    assertEquals(PlayerFacts(65, 66, 49, 34, 54, 80, 81), atpApi.playerFacts("Edouard Roger-Vasselin", SurfaceEnum.CLAY, 2011))
+
+  }
 }
