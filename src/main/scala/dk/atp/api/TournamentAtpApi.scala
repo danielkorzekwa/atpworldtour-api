@@ -12,7 +12,7 @@ import AtpWorldTourApi.SurfaceEnum._
 object TournamentAtpApi {
 
   case class Tournament(tournamentTime:Date,tournamentName:String, surface: SurfaceEnum, numOfSet:Int, matches:List[Match])
-  case class Match(marketTime:Date,players:List[String])
+  case class Match(marketTime:Date,players:List[String], winner: String, score: String)
 }
 
 trait TournamentAtpApi {

@@ -9,7 +9,7 @@ import org.joda.time.DateTime
 
 class GenericMatchAtpApiTest {
 
-  val api = new GenericTournamentAtpApi(5000)
+  val api = new GenericTournamentAtpApi(10000)
 
   @Test def parseMatches_2011 {
 
@@ -24,10 +24,13 @@ class GenericMatchAtpApiTest {
     assertEquals(Tournament(DateTime.parse("2011-01-10").toDate(), "Auckland New Zealand ATP World Tour 250", HARD, 2, Nil), tournaments(7).copy(matches = Nil))
 
     /**Check matches.*/
-    assertEquals(255, tournaments(0).matches.size)
-    assertEquals(255, tournaments(1).matches.size)
-    assertEquals(255, tournaments(2).matches.size)
-    assertEquals(63, tournaments(5).matches.size)
-    assertEquals(63, tournaments(7).matches.size)
+    assertEquals(127, tournaments(0).matches.size)
+    assertEquals(126, tournaments(1).matches.size)
+    assertEquals(127, tournaments(2).matches.size)
+    assertEquals(31, tournaments(5).matches.size)
+    assertEquals(27, tournaments(7).matches.size)
+
+    assertEquals(Match(DateTime.parse("2011-01-17").toDate(), List("Rafael Nadal", "Marcos Daniel"), "Rafael Nadal", "6-0, 5-0 RET"), tournaments(0).matches(0))
+    assertEquals(Match(DateTime.parse("2011-01-17").toDate(), List("Novak Djokovic","Andy Murray"), "Novak Djokovic", "6-4, 6-2, 6-3"), tournaments(0).matches(126))
   }
 }

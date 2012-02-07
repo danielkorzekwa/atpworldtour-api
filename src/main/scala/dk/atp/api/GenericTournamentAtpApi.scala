@@ -32,7 +32,7 @@ class GenericTournamentAtpApi(timeout: Int = 5000) extends TournamentAtpApi {
   def parseTournamentsForCategory(tournamentCategory: Int): List[Tournament] = {
     val tournamentsUrl = "http://www.atpworldtour.com/Scores/Archive-Event-Calendar.aspx?t=%s&y=2011"
 
-    val tournamentsDoc = Jsoup.connect(tournamentsUrl.format(tournamentCategory)).get()
+    val tournamentsDoc = Jsoup.connect(tournamentsUrl.format(tournamentCategory)).timeout(timeout).get()
     val tournamentsData = tournamentsDoc.getElementsByClass("calendarFilterItem")
 
     val numOfSet = tournamentCategory match {
@@ -40,9 +40,9 @@ class GenericTournamentAtpApi(timeout: Int = 5000) extends TournamentAtpApi {
       case 2 => 2
     }
 
-    collection.parallel.ForkJoinTasks.defaultForkJoinPool.setParallelism(1)
+    collection.parallel.ForkJoinTasks.defaultForkJoinPool.setParallelism(32)
     val tournaments = for {
-      e <- tournamentsData.iterator()
+      e <- tournamentsData.iterator().toList.par
 
       val df = new SimpleDateFormat(DATE_FORMAT)
       val tournamentTime = df.parse(e.child(0).text())
@@ -54,27 +54,30 @@ class GenericTournamentAtpApi(timeout: Int = 5000) extends TournamentAtpApi {
         case "hard" => HARD
       }
       val tournamentRef = e.child(4).child(0).attr("href")
-      val matches = if(!tournamentRef.isEmpty()) parseTournamentMatches(tournamentRef) else Nil
+      val matches = if (!tournamentRef.isEmpty()) parseTournamentMatches(tournamentRef, tournamentTime) else Nil
     } yield Tournament(tournamentTime, tournamentName, surface, numOfSet, matches)
 
     tournaments.toList
   }
 
-  private def parseTournamentMatches(url: String): List[Match] = {
-    
-    val doc = Jsoup.connect("http://www.atpworldtour.com" + url).get()
-   
-    val roundsDoc = doc.getElementsByClass("draws_page").get(0).getElementsByTag("ol")
-    val matches = roundsDoc.flatMap(r => toMatches(r))
+  private def parseTournamentMatches(url: String, tournamentTime: Date): List[Match] = {
+
+    val doc = Jsoup.connect("http://www.atpworldtour.com" + url).timeout(timeout).get()
+
+    val scoreDoc = doc.getElementsByClass("draws_page").get(0).getElementsByClass("score").filter(score => score.getElementsByTag("a").size() == 1)
+    val matches = scoreDoc.map(score => toMatch(score, tournamentTime))
     matches.toList
   }
 
-  private def toMatches(round: Element): List[Match] = {
-    val matches = for {
-      matchDoc <- round.children
+  private def toMatch(score: Element, tournamentTime: Date): Match = {
 
-    } yield Match(new Date(0), Nil)
+    val scoreValue = score.child(0).text
+    val matchStatsUrl = "http://www.atpworldtour.com" + (score.child(0).attr("onclick").split("'")(1))
+    
+    val matchStatsDoc = Jsoup.connect(matchStatsUrl).timeout(timeout).get()
+    val List(winner,playerA,playerB) = matchStatsDoc.getElementsByClass("playerName").map(e => e.text).toList
+   
+    Match(tournamentTime, List(playerA,playerB),winner,scoreValue)
 
-    matches.toList
   }
 }
