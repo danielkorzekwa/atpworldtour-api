@@ -11,15 +11,23 @@ class GenericMatchAtpApiTest {
 
   val api = new GenericTournamentAtpApi(5000)
 
-  @Test @Ignore def parseMatches_2011_2_markets {
+  @Test def parseMatches_2011 {
 
-    val tournaments = api.parseTournaments(2011, 10000)
+    val tournaments = api.parseTournaments(2011)
     assertEquals(67, tournaments.size)
 
-    assertEquals(Tournament(DateTime.parse("2011-01-17").toDate(), "", HARD, 5, Nil), tournaments(0))
-    assertEquals(Tournament(new Date(0), "", HARD, 1, Nil), tournaments(1))
+    assertEquals(Tournament(DateTime.parse("2011-01-17").toDate(), "Australian Open Australia Grand Slams", HARD, 3, Nil), tournaments(0).copy(matches = Nil))
+    assertEquals(Tournament(DateTime.parse("2011-05-22").toDate(), "Roland Garros France Grand Slams", CLAY, 3, Nil), tournaments(1).copy(matches = Nil))
+    assertEquals(Tournament(DateTime.parse("2011-06-20").toDate(), "Wimbledon Great Britain Grand Slams", GRASS, 3, Nil), tournaments(2).copy(matches = Nil))
 
-    assertEquals(Tournament(new Date(0), "", HARD, 1, Nil), tournaments(5))
-    assertEquals(Tournament(new Date(0), "", HARD, 1, Nil), tournaments(6))
+    assertEquals(Tournament(DateTime.parse("2011-01-03").toDate(), "Chennai India ATP World Tour 250", HARD, 2, Nil), tournaments(5).copy(matches = Nil))
+    assertEquals(Tournament(DateTime.parse("2011-01-10").toDate(), "Auckland New Zealand ATP World Tour 250", HARD, 2, Nil), tournaments(7).copy(matches = Nil))
+
+    /**Check matches.*/
+    assertEquals(255, tournaments(0).matches.size)
+    assertEquals(255, tournaments(1).matches.size)
+    assertEquals(255, tournaments(2).matches.size)
+    assertEquals(63, tournaments(5).matches.size)
+    assertEquals(63, tournaments(7).matches.size)
   }
 }

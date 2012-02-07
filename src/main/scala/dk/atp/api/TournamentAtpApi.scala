@@ -11,7 +11,7 @@ import AtpWorldTourApi.SurfaceEnum._
  */
 object TournamentAtpApi {
 
-  case class Tournament(eventTime:Date,tournamentName:String, surface: SurfaceEnum, numOfSet:Int, matches:List[Match])
+  case class Tournament(tournamentTime:Date,tournamentName:String, surface: SurfaceEnum, numOfSet:Int, matches:List[Match])
   case class Match(marketTime:Date,players:List[String])
 }
 
@@ -19,7 +19,6 @@ trait TournamentAtpApi {
 
   /**
    * @param year
-   * @param maxNumOfTournaments Maximum number of tournaments to be parsed
    */
-  def parseTournaments(year: Int, maxNumOfTournaments: Int): List[Tournament]
+  def parseTournaments(year: Int): List[Tournament]
 }
