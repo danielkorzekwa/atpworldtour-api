@@ -11,6 +11,9 @@ import AtpWorldTourApi.SurfaceEnum._
  */
 object TournamentAtpApi {
 
+  /**
+   * @param numOfSet 2 (THREE_SET_MATCH) or 3 (FIVE_SET_MATCH)
+   */
   case class Tournament(tournamentTime:Date,tournamentName:String, surface: SurfaceEnum, numOfSet:Int, matches:List[Match])
   case class Match(marketTime:Date,players:List[String], winner: String, score: String)
 }
