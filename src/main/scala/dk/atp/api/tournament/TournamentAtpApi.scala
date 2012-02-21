@@ -40,7 +40,10 @@ object TournamentAtpApi {
     def containsPlayer(playerName: String): Boolean = (playerAFacts.playerName :: playerBFacts.playerName :: Nil).contains(playerName)
   }
 
-  case class PlayerFacts(playerName: String, totalServicePointsWon: Int, totalServicePoints: Int)
+  case class PlayerFacts(playerName: String, totalServicePointsWon: Int, totalServicePoints: Int) {
+    def totalServicePointsWonPct:Double = totalServicePointsWon.toDouble/totalServicePoints.toDouble
+    def totalServicePointsLostPct = 1 - totalServicePointsWonPct
+  }
 }
 
 trait TournamentAtpApi {
