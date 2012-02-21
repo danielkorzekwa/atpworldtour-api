@@ -1,4 +1,4 @@
-package dk.atp.api
+package dk.atp.api.tournament
 
 import TournamentAtpApi._
 import org.jsoup.Jsoup
@@ -7,7 +7,7 @@ import org.jsoup.nodes.Element
 import org.jsoup.nodes._
 import scala.collection.JavaConversions._
 import java.util.Date
-import AtpWorldTourApi.SurfaceEnum._
+import dk.atp.api.AtpWorldTourApi.SurfaceEnum._
 import java.text.SimpleDateFormat
 
 /**

@@ -1,17 +1,17 @@
-package dk.atp.api
+package dk.atp.api.tournament
 
 import org.junit._
 import Assert._
 import TournamentAtpApi._
 import java.util.Date
-import AtpWorldTourApi.SurfaceEnum._
+import dk.atp.api.AtpWorldTourApi.SurfaceEnum._
 import org.joda.time.DateTime
 
 class GenericMatchAtpApiTest {
 
   val api = new GenericTournamentAtpApi(10000)
 
-  @Test def parseMatches_2011 {
+  @Test def parseTournaments_2011 {
 
     val tournaments = api.parseTournaments(2011)
     assertEquals(67, tournaments.size)
@@ -27,7 +27,7 @@ class GenericMatchAtpApiTest {
 
   }
   
-   @Test def parseMatches_2010 {
+   @Test def parseTournaments_2010 {
 
     val tournaments = api.parseTournaments(2010)
     assertEquals(67, tournaments.size)
@@ -37,7 +37,7 @@ class GenericMatchAtpApiTest {
    
   }
 
-  @Test def parseTournament {
+  @Test def parseTournamentMatches {
     val tournamentUrl = "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=580&y=2011"
     val matches = api.parseTournament(tournamentUrl)
 
@@ -50,7 +50,7 @@ class GenericMatchAtpApiTest {
 
   }
 
-  @Test def matchFacts {
+  @Test def parseMatchFacts {
 
     val matchFactsUrl = "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=580&y=2011&r=1&p=N409"
     val matchFacts = api.parseMatchFacts(matchFactsUrl)

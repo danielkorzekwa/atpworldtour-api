@@ -1,8 +1,8 @@
-package dk.atp.api
+package dk.atp.api.tournament
 
 import TournamentAtpApi._
 import java.util.Date
-import AtpWorldTourApi.SurfaceEnum._
+import dk.atp.api.AtpWorldTourApi.SurfaceEnum._
 
 /**
  * Obtains all tennis tournaments from http://www.atpworldtour.com/ page for a given year.
