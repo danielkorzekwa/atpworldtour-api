@@ -23,18 +23,39 @@ class GenericMatchAtpApiTest {
     assertEquals(Tournament(DateTime.parse("2011-01-03").toDate(), "Chennai India ATP World Tour 250", HARD, 2, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=891&y=2011").toString, tournaments(5).toString)
     assertEquals(Tournament(DateTime.parse("2011-01-10").toDate(), "Auckland New Zealand ATP World Tour 250", HARD, 2, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=301&y=2011").toString, tournaments(7).toString)
 
-     assertEquals(Tournament(DateTime.parse("2011-11-20").toDate(), "Barclays ATP World Tour Doubles Finals Great Britain ATP World Tour", HARD, 2, "").toString, tournaments(65).toString)
+    assertEquals(Tournament(DateTime.parse("2011-11-20").toDate(), "Barclays ATP World Tour Doubles Finals Great Britain ATP World Tour", HARD, 2, "").toString, tournaments(65).toString)
 
   }
-  
-   @Test def parseTournaments_2010 {
+
+  @Test def parseTournaments_2010 {
 
     val tournaments = api.parseTournaments(2010)
     assertEquals(67, tournaments.size)
 
     assertEquals(Tournament(DateTime.parse("2010-01-18").toDate(), "Australian Open Australia Grand Slams", HARD, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=580&y=2010").toString, tournaments(0).toString)
     assertEquals(Tournament(DateTime.parse("2010-02-08").toDate(), "Costa Do Sauipe Brazil ATP World Tour 250", CLAY, 2, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=533&y=2010").toString, tournaments(12).toString)
-   
+
+  }
+
+  /**Tests for carpet surface (mapped to HARD)*/
+  @Test def parseTournaments_1995 {
+    val tournaments = api.parseTournaments(1995)
+    assertEquals(87, tournaments.size)
+  }
+
+  @Test def parseTournaments_2000 {
+    val tournaments = api.parseTournaments(2000)
+    assertEquals(72, tournaments.size)
+  }
+
+  @Test def parseTournaments_1967 {
+    val tournaments = api.parseTournaments(1967)
+    assertEquals(1, tournaments.size)
+  }
+
+  @Test def parseTournaments_1955 {
+    val tournaments = api.parseTournaments(1955)
+    assertEquals(0, tournaments.size)
   }
 
   @Test def parseTournamentMatches {

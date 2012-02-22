@@ -51,6 +51,7 @@ class GenericTournamentAtpApi(timeout: Int = 5000) extends TournamentAtpApi {
         case "clay" => CLAY
         case "grass" => GRASS
         case "hard" => HARD
+        case "carpet" => HARD
       }
       val href = e.child(4).child(0).attr("href")
       val tournamentRef = if (href.isEmpty()) "" else "http://www.atpworldtour.com" + href
