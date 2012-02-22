@@ -6,7 +6,7 @@ import dk.atp.api.tournament._
 class GenericATPMatchesLoader(tournamentApi: TournamentAtpApi,numOfThreads:Int=16) extends ATPMatchesLoader {
 
   /**Loads tennis matches from http://www.atpworldtour.com/ web site.*/
-  def loadMarkets(year: Int): List[MatchComposite] = {
+  def loadMatches(year: Int): List[MatchComposite] = {
 
     collection.parallel.ForkJoinTasks.defaultForkJoinPool.setParallelism(numOfThreads)
 

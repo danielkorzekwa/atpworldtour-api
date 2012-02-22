@@ -12,8 +12,8 @@ class GenericATPMatchesLoaderTest {
   private val tournamentApi = new GenericTournamentAtpApi(5000)
   private val atpMatchesLoader = new GenericATPMatchesLoader(tournamentApi, 16)
 
-  @Test def loadMarkets {
-    val matches = atpMatchesLoader.loadMarkets(2011)
+  @Test def loadMatches {
+    val matches = atpMatchesLoader.loadMatches(2011)
     assertEquals(2687, matches.size)
 
     val tournament1 = Tournament(DateTime.parse("2011-01-17").toDate(), "Australian Open Australia Grand Slams", HARD, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=580&y=2011")
@@ -37,4 +37,5 @@ class GenericATPMatchesLoaderTest {
     assertEquals(match3.toString, matches(2686).tennisMatch.toString)
     assertEquals(matchFacts3.toString, matches(2686).matchFacts.toString)
   }
+  
 }

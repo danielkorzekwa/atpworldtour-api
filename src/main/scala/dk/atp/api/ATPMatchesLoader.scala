@@ -10,6 +10,6 @@ object ATPMatchesLoader {
 
 trait ATPMatchesLoader {
 
-   def loadMarkets(year: Int): List[MatchComposite]
+   def loadMatches(year: Int): List[MatchComposite]
   
 }

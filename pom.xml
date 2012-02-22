@@ -208,28 +208,28 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.6.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.1</version>
 		</dependency>
 
-		<!-- Test dependencies -->
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>2.0</version>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.joda</groupId>
 			<artifactId>joda-convert</artifactId>
 			<version>1.1</version>
-			<scope>test</scope>
 		</dependency>
-		
+
+		<!-- Test dependencies -->
+
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
