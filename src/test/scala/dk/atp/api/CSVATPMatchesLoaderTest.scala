@@ -73,8 +73,8 @@ class CSVATPMatchesLoaderTest {
     assertEquals("2011-01-31 00:00:00.000,Johannesburg South Africa ATP World Tour 250,HARD,2,Simon Greul,Milos Raonic,Simon Greul,7-6(5); 6-4,106,58,83,52,75", matchData.reset().getLine(299))
     assertEquals("2011-11-20 00:00:00.000,Barclays ATP World Tour Finals Great Britain ATP World Tour,HARD,2,Roger Federer,Jo-Wilfried Tsonga,Roger Federer,6-3; 6-7(6); 6-3,139,69,98,62,98", matchData.reset().getLine(2688))
   }
-  
-   @Test @Ignore def toCSVFileRealData1995 {
+
+  @Test @Ignore def toCSVFileRealData1995 {
     val tournamentApi = new GenericTournamentAtpApi(5000)
     val atpMatchesLoader = new GenericATPMatchesLoader(tournamentApi, 16)
     val matches = atpMatchesLoader.loadMatches(1995)
@@ -90,6 +90,24 @@ class CSVATPMatchesLoaderTest {
     assertEquals("2011-11-20 00:00:00.000,Barclays ATP World Tour Finals Great Britain ATP World Tour,HARD,2,Roger Federer,Jo-Wilfried Tsonga,Roger Federer,6-3; 6-7(6); 6-3,139,69,98,62,98", matchData.reset().getLine(2688))
   }
 
+  /**Tests for CSVATPMatchesLoader.fromCSVFile*/
+  @Test def fromCSVFile {
+    val csvMatchLoader = CSVATPMatchesLoader.fromCSVFile("./src/test/resources/match_data_2010_2011.csv")
+
+    assertEquals(0, csvMatchLoader.loadMatches(2009).size)
+    assertEquals(2689, csvMatchLoader.loadMatches(2010).size)
+    assertEquals(2687, csvMatchLoader.loadMatches(2011).size)
+    assertEquals(0, csvMatchLoader.loadMatches(2012).size)
+
+    val tournament = Tournament(DateTime.parse("2010-01-03T00:00:00").toDate(), "Brisbane Australia ATP World Tour 250", HARD, 2, "n/a")
+    val tennisMatch = Match("6-7(3); 7-6(5); 7-5", "n/a")
+    val matchFacts = MatchFacts(PlayerFacts("Florent Serra", 74, 107), PlayerFacts("Julian Reister", 88, 143), "Florent Serra", "R32", 160)
+
+    assertEquals(tournament.toString, csvMatchLoader.loadMatches(2010)(10).tournament.toString)
+    assertEquals(tennisMatch.toString, csvMatchLoader.loadMatches(2010)(10).tennisMatch.toString)
+    assertEquals(matchFacts.toString, csvMatchLoader.loadMatches(2010)(10).matchFacts.toString)
+  }
+  
   private def matchComposite(eventTime: DateTime, playerAName: String = "Rafael Nadal", playerBName: String = "Marcos Daniel"): MatchComposite = {
     val tournament = Tournament(eventTime.toDate(), "Australian Open Australia Grand Slams", HARD, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=580&y=2011")
     val tennisMatch = Match("6-0, 5-0 RET", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=580&y=2011&r=1&p=N409")
