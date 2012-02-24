@@ -1,6 +1,6 @@
 package dk.atp.api
 
-import ATPMatchesLoader._
+import domain._
 import dk.atp.api.tournament._
 
 class GenericATPMatchesLoader(tournamentApi: TournamentAtpApi,numOfThreads:Int=16) extends ATPMatchesLoader {

@@ -5,7 +5,7 @@ import Assert._
 import dk.atp.api.tournament._
 import TournamentAtpApi._
 import org.joda.time.DateTime
-import AtpWorldTourApi.SurfaceEnum._
+import dk.atp.api.domain.SurfaceEnum._
 
 class GenericATPMatchesLoaderTest {
 

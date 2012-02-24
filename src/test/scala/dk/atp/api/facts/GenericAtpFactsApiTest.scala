@@ -1,12 +1,13 @@
-package dk.atp.api
+package dk.atp.api.facts
 
 import org.junit._
 import Assert._
-import AtpWorldTourApi._
+import AtpFactsApi._
+import dk.atp.api.domain.SurfaceEnum
 
-class AtpWorldTourApiImplTest {
+class GenericAtpFactsApiTest {
 
-  private val atpApi = new AtpWorldTourApiImpl();
+  private val atpApi = new GenericAtpFactsApi();
 
   /**Tests for firstServeFacts.*/
 

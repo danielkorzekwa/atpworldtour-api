@@ -1,6 +1,6 @@
 package dk.atp.api
 
-import ATPMatchesLoader._
+import domain._
 import org.joda.time._
 import org.apache.commons.io.FileUtils._
 import java.io.File
@@ -8,7 +8,7 @@ import scala.collection.JavaConversions._
 import java.text.SimpleDateFormat
 import scala.io.Source
 import dk.atp.api.tournament.TournamentAtpApi._
-import dk.atp.api.AtpWorldTourApi.SurfaceEnum
+import dk.atp.api.domain.SurfaceEnum._
 
 object CSVATPMatchesLoader {
 

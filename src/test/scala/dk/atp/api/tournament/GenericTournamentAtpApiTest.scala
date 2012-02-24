@@ -4,7 +4,7 @@ import org.junit._
 import Assert._
 import TournamentAtpApi._
 import java.util.Date
-import dk.atp.api.AtpWorldTourApi.SurfaceEnum._
+import dk.atp.api.domain.SurfaceEnum._
 import org.joda.time.DateTime
 
 class GenericMatchAtpApiTest {

@@ -1,13 +1,14 @@
-package dk.atp.api
+package dk.atp.api.facts
 
-import AtpWorldTourApi._
+import AtpFactsApi._
+import dk.atp.api.domain.SurfaceEnum._
 
 /**
  * API interface for atpworldtour.com tennis statistics.
  *
  */
 
-object AtpWorldTourApi {
+object AtpFactsApi {
 
   object PointWonFactEnum extends Enumeration {
     type PointWonFactEnum = Value
@@ -19,21 +20,6 @@ object AtpWorldTourApi {
     override def toString() = PointWonFactEnum.values.mkString("MatchfactEnum [", ", ", "]")
   }
   
-  object SurfaceEnum extends Enumeration {
-    type SurfaceEnum = Value
-    val CLAY = Value(1)
-    val GRASS = Value(2)
-    val HARD = Value(3)
-    
-    def fromText(surface:String) = surface match {
-      case "CLAY" => CLAY
-      case "GRASS" => GRASS
-      case "HARD" => HARD
-    }
-    
-    override def toString() = SurfaceEnum.values.mkString("SurfaceEnum [", ", ", "]")
-  }
-
   /**
    * @param rank
    * @param fullName
@@ -75,10 +61,10 @@ object AtpWorldTourApi {
 
 }
 
-import AtpWorldTourApi.PointWonFactEnum._
-import AtpWorldTourApi.SurfaceEnum._
+import AtpFactsApi.PointWonFactEnum._
 
-trait AtpWorldTourApi {
+
+trait AtpFactsApi {
 
   /**Match facts statistics http://www.atpworldtour.com/Matchfacts/Matchfacts-Landing.aspx*/
   def firstServeFacts(surface: SurfaceEnum, year: Int): FirstServeFacts

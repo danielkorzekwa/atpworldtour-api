@@ -2,10 +2,10 @@ package dk.atp.api
 
 import org.junit._
 import Assert._
-import ATPMatchesLoader._
+import domain._
 import dk.atp.api.tournament.TournamentAtpApi._
 import org.joda.time._
-import dk.atp.api.AtpWorldTourApi.SurfaceEnum._
+import dk.atp.api.domain.SurfaceEnum._
 import scala.io.Source
 import tournament.GenericTournamentAtpApi
 
@@ -59,8 +59,7 @@ class CSVATPMatchesLoaderTest {
   }
 
   @Test def toCSVFileRealData2011 {
-    val tournamentApi = new GenericTournamentAtpApi(5000)
-    val atpMatchesLoader = new GenericATPMatchesLoader(tournamentApi, 16)
+    val atpMatchesLoader = CSVATPMatchesLoader.fromCSVFile("./src/test/resources/match_data_2010_2011.csv")
     val matches = atpMatchesLoader.loadMatches(2011)
 
     val matchDataFile = "./target/matches_data_file.csv"
@@ -75,8 +74,7 @@ class CSVATPMatchesLoaderTest {
   }
 
   @Test def toCSVFileRealData1995 {
-    val tournamentApi = new GenericTournamentAtpApi(5000)
-    val atpMatchesLoader = new GenericATPMatchesLoader(tournamentApi, 16)
+    val atpMatchesLoader = CSVATPMatchesLoader.fromCSVFile("./src/test/resources/match_data_1995.csv")
     val matches = atpMatchesLoader.loadMatches(1995)
 
     val matchDataFile = "./target/matches_data_file.csv"

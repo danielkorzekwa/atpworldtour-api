@@ -7,8 +7,8 @@ import org.jsoup.nodes.Element
 import org.jsoup.nodes._
 import scala.collection.JavaConversions._
 import java.util.Date
-import dk.atp.api.AtpWorldTourApi.SurfaceEnum._
 import java.text.SimpleDateFormat
+import dk.atp.api.domain.SurfaceEnum._
 
 /**
  * Obtains all tennis tournaments from http://www.atpworldtour.com/ page for a given year.

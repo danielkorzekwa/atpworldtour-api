@@ -1,11 +1,10 @@
-package dk.atp.api
+package dk.atp.api.facts
 
 import scala.collection.JavaConversions.asScalaBuffer
 import org.jsoup.Jsoup
-import AtpWorldTourApi._
+import AtpFactsApi._
 import PointWonFactEnum.PointWonFactEnum
-import SurfaceEnum.SurfaceEnum
-import SurfaceEnum._
+import dk.atp.api.domain.SurfaceEnum._
 import org.jsoup.select.Elements
 import org.jsoup.nodes.Element
 import org.jsoup.nodes._
@@ -17,7 +16,7 @@ import org.jsoup.nodes._
  * If a timeout occurs, an IOException will be thrown. The default timeout is 5 seconds (5000 millis).
  * A timeout of zero is treated as an infinite timeout.
  */
-class AtpWorldTourApiImpl(timeout: Int = 5000) extends AtpWorldTourApi {
+class GenericAtpFactsApi(timeout: Int = 5000) extends AtpFactsApi {
 
   /**Match facts statistics http://www.atpworldtour.com/Matchfacts/Matchfacts-Landing.aspx*/
   def firstServeFacts(surface: SurfaceEnum, year: Int): FirstServeFacts = {
