@@ -104,6 +104,10 @@ class CSVATPMatchesLoaderTest {
     assertEquals(tournament.toString, csvMatchLoader.loadMatches(2010)(10).tournament.toString)
     assertEquals(tennisMatch.toString, csvMatchLoader.loadMatches(2010)(10).tennisMatch.toString)
     assertEquals(matchFacts.toString, csvMatchLoader.loadMatches(2010)(10).matchFacts.toString)
+    
+    /**Check numOFSets*/
+    val tournament2 = Tournament(DateTime.parse("2010-01-18T00:00:00").toDate(), "Australian Open Australia Grand Slams", HARD, 3, "n/a")
+    assertEquals(tournament2.toString, csvMatchLoader.loadMatches(2010)(150).tournament.toString)
   }
 
   private def matchComposite(eventTime: DateTime, playerAName: String = "Rafael Nadal", playerBName: String = "Marcos Daniel"): MatchComposite = {
