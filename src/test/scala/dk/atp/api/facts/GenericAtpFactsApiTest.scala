@@ -7,7 +7,7 @@ import dk.atp.api.domain.SurfaceEnum
 
 class GenericAtpFactsApiTest {
 
-  private val atpApi = new GenericAtpFactsApi();
+  private val atpApi = new GenericAtpFactsApi(10000);
 
   /**Tests for firstServeFacts.*/
 

@@ -43,6 +43,12 @@ class GenericMatchAtpApiTest {
     assertEquals(87, tournaments.size)
   }
 
+  @Test def parseTournaments_2007 {
+    val tournaments = api.parseTournaments(2007)
+    assertEquals(68, tournaments.size)
+  }
+
+  
   @Test def parseTournaments_2000 {
     val tournaments = api.parseTournaments(2000)
     assertEquals(72, tournaments.size)

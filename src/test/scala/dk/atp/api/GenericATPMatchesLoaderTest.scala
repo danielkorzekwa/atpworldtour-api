@@ -9,7 +9,7 @@ import dk.atp.api.domain.SurfaceEnum._
 
 class GenericATPMatchesLoaderTest {
 
-  private val tournamentApi = new GenericTournamentAtpApi(5000)
+  private val tournamentApi = new GenericTournamentAtpApi(10000)
   private val atpMatchesLoader = new GenericATPMatchesLoader(tournamentApi, 16)
 
   @Test def loadMatches {
@@ -38,4 +38,9 @@ class GenericATPMatchesLoaderTest {
     assertEquals(matchFacts3.toString, matches(2686).matchFacts.toString)
   }
   
+  
+  @Test def loadMatches_2007 {
+    val matches = new GenericATPMatchesLoader(tournamentApi, 16).loadMatches(2007)
+    assertEquals(2663, matches.size)
+  }
 }

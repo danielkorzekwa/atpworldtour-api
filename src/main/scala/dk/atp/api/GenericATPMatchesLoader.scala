@@ -10,7 +10,7 @@ class GenericATPMatchesLoader(tournamentApi: TournamentAtpApi,numOfThreads:Int=1
 
     collection.parallel.ForkJoinTasks.defaultForkJoinPool.setParallelism(numOfThreads)
 
-    val tournaments = tournamentApi.parseTournaments(year).filter(!_.tournamentUrl.isEmpty())
+    val tournaments = tournamentApi.parseTournaments(year).filter(t => !t.tournamentUrl.isEmpty() && !t.tournamentUrl.endsWith("mds.pdf"))
 
     val matchesComposite = tournaments.par.flatMap { tournament =>
 
