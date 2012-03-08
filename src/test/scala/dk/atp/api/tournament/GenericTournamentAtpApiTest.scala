@@ -63,6 +63,11 @@ class GenericMatchAtpApiTest {
     val tournaments = api.parseTournaments(1955)
     assertEquals(0, tournaments.size)
   }
+  
+  @Test def parseTournaments_2012 {
+    val tournaments = api.parseTournaments(2012)
+    assertTrue(tournaments.size>=67)
+  }
 
   @Test def parseTournamentMatches {
     val tournamentUrl = "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=580&y=2011"

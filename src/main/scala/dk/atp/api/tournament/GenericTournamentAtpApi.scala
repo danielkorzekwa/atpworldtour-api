@@ -66,12 +66,11 @@ class GenericTournamentAtpApi(timeout: Int = 5000) extends TournamentAtpApi {
    */
   def parseTournament(tournamentUrl: String): List[Match] = {
     val doc = parseUrl(tournamentUrl)
-
-    val scoreDocs = doc.getElementsByClass("draws_page").get(0).getElementsByClass("score").filter(score => score.getElementsByTag("a").size() == 1)
+    val scoreDocs = doc.getElementsByClass("scores").filter(score => score.getElementsByTag("a").size() == 1)
     val matches = for {
-      scpreDoc <- scoreDocs
-      val scoreValue = scpreDoc.child(0).text
-      val matchStatsUrl = "http://www.atpworldtour.com" + (scpreDoc.child(0).attr("onclick").split("'")(1))
+      scoreDoc <- scoreDocs
+      val scoreValue = scoreDoc.child(0).text
+      val matchStatsUrl = "http://www.atpworldtour.com" + (scoreDoc.child(0).attr("href").split("'")(1))
     } yield Match(scoreValue, matchStatsUrl)
     matches.toList
   }
