@@ -3,7 +3,7 @@ Scala API for atpworldtour.com tennis statistics.
 How to retrieve tennis matches for year 2011 and store them in a csv file? 
 
 Tennis matchesCSV example:
-event_time,event_name,surface,num_of_sets,playerA,playerB,winner,score,round,duration_minutes,playerATotalServicePointsWon,playerATotalServicePoints,playerBTotalServicePointsWon,playerBTotalServicePoints
+event_time, event_name, surface, num_of_sets, playerA,playerB, winner, score, round, duration_minutes, playerATotalServicePointsWon, playerATotalServicePoints, playerBTotalServicePointsWon, playerBTotalServicePoints
 2011-01-02 00:00:00.000,Brisbane Australia ATP World Tour 250,HARD,2,Robin Soderling,Ryan Harrison,Robin Soderling,6-2; 6-4,R32,66,39,52,28,50
 2011-01-02 00:00:00.000,Brisbane Australia ATP World Tour 250,HARD,2,Michael Berrer,Dudi Sela,Michael Berrer,1-6; 7-6(3); 6-2,R32,152,62,99,62,103
 2011-01-02 00:00:00.000,Brisbane Australia ATP World Tour 250,HARD,2,Matthew Ebden,John Millman,Matthew Ebden,4-6; 6-2; 6-4,R32,104,55,85,48,76
