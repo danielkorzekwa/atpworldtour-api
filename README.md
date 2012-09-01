@@ -1,9 +1,9 @@
 Scala API for atpworldtour.com tennis statistics
-===================================
+------------------------------------------------
 
 
-How to use atpworldapi from a maven project?
---------------------------------------------
+### How to use atpworldapi from a maven project?
+
 
 1)Add maven repository to project pom.xml file:
 <repositories>
@@ -19,8 +19,8 @@ How to use atpworldapi from a maven project?
 	<version>0.1</version>
 </dependency>
 
-How to retrieve tennis matches for year 2011 and store them in a csv file? 
---------------------------------------------------------------------------
+### How to retrieve tennis matches for year 2011 and store them in a csv file? 
+
 
 Tennis matchesCSV example:
 event_time, event_name, surface, num_of_sets, playerA,playerB, winner, score, round, duration_minutes, playerATotalServicePointsWon, playerATotalServicePoints, playerBTotalServicePointsWon, playerBTotalServicePoints
