@@ -6,6 +6,7 @@ Scala API for atpworldtour.com tennis statistics
 
 
 1)Add maven repository to project pom.xml file:
+
     <repositories>
       <repository>
         <id>dk-maven-repo</id>
@@ -14,6 +15,7 @@ Scala API for atpworldtour.com tennis statistics
     <repositories>
 
 2)Add maven dependency for atpworldapi to project pom.xml file:
+
     <dependency>
       <groupId>dk.atp</groupId>
       <artifactId>atpworldtour-api</artifactId>
