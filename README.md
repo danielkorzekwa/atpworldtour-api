@@ -1,5 +1,6 @@
-Scala API for atpworldtour.com tennis statistics.
+Scala API for atpworldtour.com tennis statistics
 ===================================
+
 
 How to use atpworldapi from a maven project?
 --------------------------------------------
