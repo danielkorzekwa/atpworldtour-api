@@ -7,7 +7,7 @@
 	<groupId>dk.atp</groupId>
 	<artifactId>atpworldtour-api</artifactId>
 	<name>atpworldtour-api</name>
-	<version>0.1</version>
+	<version>0.2-SNAPSHOT</version>
 	<inceptionYear>2011</inceptionYear>
 	<url>https://github.com/danielkorzekwa/atpworldtour-api</url>
 
