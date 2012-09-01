@@ -4,6 +4,7 @@ Scala API for atpworldtour.com tennis statistics
 
 ### How to use atpworldapi from a maven project?
 
+    test
 
 1)Add maven repository to project pom.xml file:
 <repositories>
