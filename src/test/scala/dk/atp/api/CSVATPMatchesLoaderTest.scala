@@ -52,10 +52,10 @@ class CSVATPMatchesLoaderTest {
     val matchData = Source.fromFile(matchDataFile)
     assertEquals(4, matchData.reset().getLines().size)
 
-    assertEquals("event_time,event_name,surface,num_of_sets,playerA,playerB,winner,score,round,duration_minutes,playerATotalServicePointsWon,playerATotalServicePoints,playerBTotalServicePointsWon,playerBTotalServicePoints", matchData.reset().getLine(1))
-    assertEquals("2011-01-17 00:00:00.000,Australian Open Australia Grand Slams,HARD,3,Rafael Nadal,Marcos Daniel,Rafael Nadal,6-0; 5-0 RET,R128,56,25,35,2,26", matchData.reset().getLine(2))
-    assertEquals("2012-02-12 10:20:30.000,Australian Open Australia Grand Slams,HARD,3,Rafael Nadal2,Marcos Daniel2,Rafael Nadal,6-0; 5-0 RET,R128,56,25,35,2,26", matchData.reset().getLine(3))
-    assertEquals("2012-05-19 00:00:00.000,Australian Open Australia Grand Slams,HARD,3,Rafael Nadal3,Marcos Daniel3,Rafael Nadal,6-0; 5-0 RET,R128,56,25,35,2,26", matchData.reset().getLine(4))
+    assertEquals("event_time,event_name,surface,num_of_sets,playerA,playerB,winner,score,round,duration_minutes,a_aces,a_double_faults,a_first_serve_hits,a_first_serve_total,a_first_serve_won,a_first_serve_played,a_second_serve_won,a_second_serve_played,a_break_points_saved,a_break_points_total,a_service_games,a_service_points_won,a_service_points_total,b_aces,b_double_faults,b_first_serve_hits,b_first_serve_total,b_first_serve_won,b_first_serve_played,b_second_serve_won,b_second_serve_played,b_break_points_saved,b_break_points_total,b_service_games,b_service_points_won,b_service_points_total", matchData.reset().getLines().toIndexedSeq(0))
+    assertEquals("2011-01-17 00:00:00.000,Australian Open Australia Grand Slams,HARD,3,Rafael Nadal,Marcos Daniel,Rafael Nadal,6-0; 5-0 RET,R128,56,1,2,3,4,5,6,7,8,9,10,11,25,35,12,13,14,15,16,17,18,19,20,21,22,2,26", matchData.reset().getLines().toIndexedSeq(1))
+    assertEquals("2012-02-12 10:20:30.000,Australian Open Australia Grand Slams,HARD,3,Rafael Nadal2,Marcos Daniel2,Rafael Nadal,6-0; 5-0 RET,R128,56,1,2,3,4,5,6,7,8,9,10,11,25,35,12,13,14,15,16,17,18,19,20,21,22,2,26", matchData.reset().getLines().toIndexedSeq(2))
+    assertEquals("2012-05-19 00:00:00.000,Australian Open Australia Grand Slams,HARD,3,Rafael Nadal3,Marcos Daniel3,Rafael Nadal,6-0; 5-0 RET,R128,56,1,2,3,4,5,6,7,8,9,10,11,25,35,12,13,14,15,16,17,18,19,20,21,22,2,26", matchData.reset().getLines().toIndexedSeq(3))
   }
 
   @Test def toCSVFileRealData2011 {
@@ -66,11 +66,11 @@ class CSVATPMatchesLoaderTest {
     CSVATPMatchesLoader.toCSVFile(matches, matchDataFile)
 
     val matchData = Source.fromFile(matchDataFile)
-    assertEquals(2688, matchData.reset().getLines().size)
-    assertEquals("2011-01-02 00:00:00.000,Brisbane Australia ATP World Tour 250,HARD,2,Robin Soderling,Ryan Harrison,Robin Soderling,6-2; 6-4,R32,66,39,52,28,50", matchData.reset().getLine(2))
-    assertEquals("2011-01-10 00:00:00.000,Sydney Australia ATP World Tour 250,HARD,2,Frederico Gil,Jarkko Nieminen,Frederico Gil,6-2 RET,R32,32,18,26,11,20", matchData.reset().getLine(123))
-    assertEquals("2011-01-31 00:00:00.000,Johannesburg South Africa ATP World Tour 250,HARD,2,Simon Greul,Milos Raonic,Simon Greul,7-6(5); 6-4,R16,106,58,83,52,75", matchData.reset().getLine(299))
-    assertEquals("2011-11-20 00:00:00.000,Barclays ATP World Tour Finals Great Britain ATP World Tour,HARD,2,Roger Federer,Jo-Wilfried Tsonga,Roger Federer,6-3; 6-7(6); 6-3,F,139,69,98,62,98", matchData.reset().getLine(2688))
+    assertEquals(2945, matchData.reset().getLines().size)
+    assertEquals("2011-01-02 00:00:00.000,Brisbane Australia ATP World Tour 250,HARD,2,Robin Soderling,Ryan Harrison,Robin Soderling,6-2; 6-4,R32,66,8,3,32,52,26,32,13,20,1,1,9,39,52,4,1,27,50,16,27,12,23,1,4,9,28,50", matchData.reset().getLines().toIndexedSeq(1))
+    assertEquals("2011-01-10 00:00:00.000,Sydney Australia ATP World Tour 250,HARD,2,Frederico Gil,Jarkko Nieminen,Frederico Gil,6-2 RET,R32,32,1,0,19,26,14,19,4,7,4,4,4,18,26,0,0,12,20,6,12,5,8,0,2,4,11,20", matchData.reset().getLines().toIndexedSeq(127))
+    assertEquals("2011-01-31 00:00:00.000,Johannesburg South Africa ATP World Tour 250,HARD,2,Frank Dancevic,Fritz Wolmarans,Frank Dancevic,7-6(4); 6-3,R16,96,6,5,44,75,35,44,14,31,1,2,11,49,75,9,3,42,64,28,42,13,22,5,7,10,41,64", matchData.reset().getLines().toIndexedSeq(299))
+    assertEquals("2011-10-09 00:00:00.000,ATP World Tour Masters 1000 Shanghai Shanghai; China ATP World Tour Masters 1000,HARD,2,Andy Murray,Stanislas Wawrinka,Andy Murray,6-4; 3-6; 6-3,R16,132,4,3,55,86,40,55,13,31,4,7,14,53,86,5,2,44,78,30,44,17,34,1,5,14,47,78", matchData.reset().getLines().toIndexedSeq(2688))
   }
 
   @Test def toCSVFileRealData1995 {
@@ -81,11 +81,11 @@ class CSVATPMatchesLoaderTest {
     CSVATPMatchesLoader.toCSVFile(matches, matchDataFile)
 
     val matchData = Source.fromFile(matchDataFile)
-    assertEquals(3383, matchData.reset().getLines().size)
-    assertEquals("1995-01-02 00:00:00.000,Adelaide Australia ATP World Tour,HARD,2,Yevgeny Kafelnikov,Marcos Ondruska,Yevgeny Kafelnikov,7-6(5); 6-1,R32,82,40,57,42,75", matchData.reset().getLine(2))
-    assertEquals("1995-01-09 00:00:00.000,Jakarta Indonesia ATP World Tour,HARD,2,Paul Haarhuis,Radomir Vasek,Paul Haarhuis,7-5; 7-5,F,99,40,65,47,88", matchData.reset().getLine(123))
-    assertEquals("1995-02-06 00:00:00.000,Dubai U.A.E. ATP World Tour,HARD,2,Pat Cash,Albert Costa,Pat Cash,6-3; 4-6; 6-3,R16,118,58,88,57,95", matchData.reset().getLine(299))
-    assertEquals("1995-11-14 00:00:00.000,ATP Tour World Championship Germany ATP World Tour,HARD,2,Boris Becker,Michael Chang,Boris Becker,7-6(3); 6-0; 7-6(5),F,137,70,96,62,104", matchData.reset().getLine(3383))
+    assertEquals(3645, matchData.reset().getLines().size)
+    assertEquals("1995-01-02 00:00:00.000,Adelaide Australia ATP World Tour,HARD,2,Henrik Holm,Cedric Pioline,Henrik Holm,6-2; 6-2,R32,70,4,8,28,59,22,28,17,31,7,7,8,39,59,1,5,30,55,19,30,9,25,7,11,8,28,55", matchData.reset().getLines().toIndexedSeq(2))
+    assertEquals("1995-01-09 00:00:00.000,Jakarta Indonesia ATP World Tour,HARD,2,Paul Haarhuis,Kenneth Carlsen,Paul Haarhuis,3-6; 6-3; 6-3,S,117,2,2,47,77,33,47,21,30,5,6,13,54,77,10,6,61,99,43,61,16,38,9,12,14,59,99", matchData.reset().getLines().toIndexedSeq(123))
+    assertEquals("1995-02-06 00:00:00.000,Dubai U.A.E. ATP World Tour,HARD,2,Javier Sanchez,Sergi Bruguera,Javier Sanchez,W/O,R16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0", matchData.reset().getLines().toIndexedSeq(299))
+    assertEquals("1995-10-23 00:00:00.000,ATP Masters Series Essen Germany ATP World Tour,HARD,2,Thomas Enqvist,Todd Martin,Thomas Enqvist,6-3; 6-4,R32,66,2,3,25,54,23,25,19,29,2,2,10,42,54,9,4,33,51,26,33,5,18,1,3,9,31,51", matchData.reset().getLines().toIndexedSeq(3383))
   }
 
   /**Tests for CSVATPMatchesLoader.fromCSVFile*/
@@ -93,27 +93,66 @@ class CSVATPMatchesLoaderTest {
     val csvMatchLoader = CSVATPMatchesLoader.fromCSVFile("./src/test/resources/match_data_2010_2011.csv")
 
     assertEquals(0, csvMatchLoader.loadMatches(2009).size)
-    assertEquals(2689, csvMatchLoader.loadMatches(2010).size)
-    assertEquals(2687, csvMatchLoader.loadMatches(2011).size)
+    assertEquals(2944, csvMatchLoader.loadMatches(2010).size)
+    assertEquals(2944, csvMatchLoader.loadMatches(2011).size)
     assertEquals(0, csvMatchLoader.loadMatches(2012).size)
 
     val tournament = Tournament(DateTime.parse("2010-01-03T00:00:00").toDate(), "Brisbane Australia ATP World Tour 250", HARD, 2, "n/a")
     val tennisMatch = Match("6-7(3); 7-6(5); 7-5", "n/a")
-    val matchFacts = MatchFacts(PlayerFacts("Florent Serra", 74, 107), PlayerFacts("Julian Reister", 88, 143), "Florent Serra", "R32", 160)
+
+    val serraFacts = PlayerFacts("Florent Serra",
+      9,
+      1,
+      67, 107,
+      46, 67,
+      28, 40,
+      2, 5,
+      18,
+      74, 107)
+    val reisterFacts = PlayerFacts("Julian Reister",
+      7,
+      1,
+      105, 143,
+      69, 105,
+      19, 38,
+      5, 9,
+      18,
+      88, 143)
+
+    val matchFacts = MatchFacts(serraFacts, reisterFacts, "Florent Serra", "R32", 160)
 
     assertEquals(tournament.toString, csvMatchLoader.loadMatches(2010)(10).tournament.toString)
     assertEquals(tennisMatch.toString, csvMatchLoader.loadMatches(2010)(10).tennisMatch.toString)
     assertEquals(matchFacts.toString, csvMatchLoader.loadMatches(2010)(10).matchFacts.toString)
-    
+
     /**Check numOFSets*/
     val tournament2 = Tournament(DateTime.parse("2010-01-18T00:00:00").toDate(), "Australian Open Australia Grand Slams", HARD, 3, "n/a")
-    assertEquals(tournament2.toString, csvMatchLoader.loadMatches(2010)(150).tournament.toString)
+    assertEquals(tournament2.toString, csvMatchLoader.loadMatches(2010)(155).tournament.toString)
   }
 
   private def matchComposite(eventTime: DateTime, playerAName: String = "Rafael Nadal", playerBName: String = "Marcos Daniel"): MatchComposite = {
     val tournament = Tournament(eventTime.toDate(), "Australian Open Australia Grand Slams", HARD, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=580&y=2011")
     val tennisMatch = Match("6-0, 5-0 RET", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=580&y=2011&r=1&p=N409")
-    val matchFacts = MatchFacts(PlayerFacts(playerAName, 25, 35), PlayerFacts(playerBName, 2, 26), "Rafael Nadal", "R128", 56)
+
+    val playerAFacts = PlayerFacts(playerAName,
+      1,
+      2,
+      3, 4,
+      5, 6,
+      7, 8,
+      9, 10,
+      11,
+      25, 35)
+    val playerBFacts = PlayerFacts(playerBName,
+      12,
+      13,
+      14, 15,
+      16, 17,
+      18, 19,
+      20, 21,
+      22,
+      2, 26)
+    val matchFacts = MatchFacts(playerAFacts, playerBFacts, "Rafael Nadal", "R128", 56)
     MatchComposite(tournament, tennisMatch, matchFacts)
   }
 }

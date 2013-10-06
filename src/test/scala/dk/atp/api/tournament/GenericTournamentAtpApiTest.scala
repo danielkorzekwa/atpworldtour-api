@@ -48,7 +48,6 @@ class GenericMatchAtpApiTest {
     assertEquals(68, tournaments.size)
   }
 
-  
   @Test def parseTournaments_2000 {
     val tournaments = api.parseTournaments(2000)
     assertEquals(72, tournaments.size)
@@ -56,17 +55,17 @@ class GenericMatchAtpApiTest {
 
   @Test def parseTournaments_1967 {
     val tournaments = api.parseTournaments(1967)
-    assertEquals(1, tournaments.size)
+    assertEquals(4, tournaments.size)
   }
 
   @Test def parseTournaments_1955 {
     val tournaments = api.parseTournaments(1955)
-    assertEquals(0, tournaments.size)
+    assertEquals(4, tournaments.size)
   }
-  
+
   @Test def parseTournaments_2012 {
     val tournaments = api.parseTournaments(2012)
-    assertTrue(tournaments.size>=67)
+    assertTrue(tournaments.size >= 67)
   }
 
   @Test def parseTournamentMatches {
@@ -75,10 +74,10 @@ class GenericMatchAtpApiTest {
 
     assertEquals(127, matches.size)
 
-    assertEquals(Match("6-0, 5-0 RET", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=580&y=2011&r=1&p=N409").toString(), matches(0).toString())
-    assertEquals(Match("6-4, 6-0, 6-1", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=580&y=2011&r=2&p=M680").toString(), matches(94).toString())
+    assertEquals(Match("6-0, 5-0 RET", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=0580&y=2011&r=1&p=N409").toString(), matches(0).toString())
+    assertEquals(Match("6-4, 6-0, 6-1", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=0580&y=2011&r=2&p=M680").toString(), matches(94).toString())
 
-    assertEquals(Match("6-4, 6-2, 6-3", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=580&y=2011&r=7&p=D643").toString(), matches(126).toString())
+    assertEquals(Match("6-4, 6-2, 6-3", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=0580&y=2011&r=7&p=D643").toString(), matches(126).toString())
 
   }
 
@@ -87,8 +86,26 @@ class GenericMatchAtpApiTest {
     val matchFactsUrl = "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=580&y=2011&r=1&p=N409"
     val matchFacts = api.parseMatchFacts(matchFactsUrl)
 
-    assertEquals(PlayerFacts("Rafael Nadal", 25, 35).toString, matchFacts.playerAFacts.toString)
-    assertEquals(PlayerFacts("Marcos Daniel", 2, 26).toString, matchFacts.playerBFacts.toString)
+    val playerAFacts = PlayerFacts("Rafael Nadal",
+      4,
+      3,
+      19, 35,
+      16, 19,
+      9, 16,
+      4, 4,
+      5,
+      25, 35)
+    val playerBFacts = PlayerFacts("Marcos Daniel",
+      0,
+      0,
+      17, 26,
+      2, 17,
+      0, 9,
+      0, 6,
+      6,
+      2, 26)
+    assertEquals(playerAFacts.toString, matchFacts.playerAFacts.toString)
+    assertEquals(playerBFacts.toString, matchFacts.playerBFacts.toString)
 
     assertEquals("Rafael Nadal", matchFacts.winner)
     assertEquals("R128", matchFacts.round)

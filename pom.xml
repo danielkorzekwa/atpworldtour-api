@@ -13,12 +13,12 @@
 
 	<!-- Properties -->
 	<properties>
-		<scala.version>2.9.2</scala.version>
+		<scala.version>2.10.0</scala.version>
 		<junit.version>4.4</junit.version>
 	</properties>
 
 	<build>
-	
+
 		<sourceDirectory>src/main/scala</sourceDirectory>
 		<testSourceDirectory>src/test/scala</testSourceDirectory>
 
@@ -132,6 +132,18 @@
 			<groupId>org.joda</groupId>
 			<artifactId>joda-convert</artifactId>
 			<version>1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.typesafe</groupId>
+			<artifactId>scalalogging-slf4j_2.10</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.2</version>
 		</dependency>
 
 		<!-- Test dependencies -->

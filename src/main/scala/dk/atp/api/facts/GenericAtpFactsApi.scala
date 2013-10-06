@@ -96,7 +96,7 @@ class GenericAtpFactsApi(timeout: Int = 5000) extends AtpFactsApi {
       val fullNameArray = fullName.split(" ")
       val surname = fullNameArray.last
       val firstName = fullNameArray.head
-      val altAtpQuery = atpQuery.replace("Top-Players", surname.subSequence(0,2) + "/" + firstName.first)
+      val altAtpQuery = atpQuery.replace("Top-Players", surname.subSequence(0,2) + "/" + firstName)
       Jsoup.connect(altAtpQuery).timeout(timeout).get();
     }
 

@@ -40,9 +40,17 @@ object TournamentAtpApi {
     def containsPlayer(playerName: String): Boolean = (playerAFacts.playerName :: playerBFacts.playerName :: Nil).contains(playerName)
   }
 
-  case class PlayerFacts(playerName: String, totalServicePointsWon: Int, totalServicePoints: Int) {
-    def totalServicePointsWonPct:Double = totalServicePointsWon.toDouble/totalServicePoints.toDouble
-    def totalServicePointsLostPct = 1 - totalServicePointsWonPct
+  case class PlayerFacts(playerName: String,
+    aces: Int,
+    doubleFaults: Int,
+    firstServeHits: Int, firstServeTotal: Int,
+    firstServeWon: Int, firstServePlayed: Int,
+    secondServeWon: Int, secondServePlayed: Int,
+    breakPointsSaved: Int, breakPointsTotal: Int,
+    serviceGames: Int,
+    servicePointsWon: Int,servicePointsTotal: Int) {
+    def servicePointsWonPct: Double = servicePointsWon.toDouble / servicePointsTotal.toDouble
+    def servicePointsLostPct = 1 - servicePointsWonPct
   }
 }
 

@@ -135,7 +135,7 @@ class GenericAtpFactsApiTest {
     assertEquals(PlayerFacts(60, 79, 57, 33, 50, 251, 244), atpApi.playerFacts("Roger Federer", SurfaceEnum.CLAY, 2009))
   }
 
-  @Test def playeFacts_diffrent_players {
+  @Ignore @Test def playeFacts_diffrent_players {
     assertEquals(PlayerFacts(74, 68, 59, 36, 54, 397, 398), atpApi.playerFacts("Juan Carlos Ferrero", SurfaceEnum.CLAY, 2010))
     assertEquals(PlayerFacts(62, 75, 47, 30, 49, 153, 156), atpApi.playerFacts("Milos Raonic", SurfaceEnum.CLAY, 2011))
     assertEquals(PlayerFacts(0, 0, 0, 0, 0, 0, 0), atpApi.playerFacts("Milos Raonic", SurfaceEnum.CLAY, 2010))
@@ -146,7 +146,7 @@ class GenericAtpFactsApiTest {
   }
 
   //Use http://www.atpworldtour.com/Tennis/Players/Fa/A/Michael-Russell.aspx instead of http://www.atpworldtour.com/Tennis/Players/Top-Players/Michael-Russell.aspx
-  @Test def playerFacts_otherUrl {
+  @Ignore @Test def playerFacts_otherUrl {
     assertEquals(PlayerFacts(67, 57, 37, 23, 42, 34, 35), atpApi.playerFacts("Michael Russell", SurfaceEnum.CLAY, 2011))
 
     assertEquals(PlayerFacts(54, 60, 45, 40, 61, 61, 60), atpApi.playerFacts("Cedrik-Marcel Stebe", SurfaceEnum.CLAY, 2011))

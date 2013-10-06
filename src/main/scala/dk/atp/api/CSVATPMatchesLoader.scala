@@ -25,7 +25,13 @@ object CSVATPMatchesLoader {
       .map(_.toCSVLine(df))
 
     val header = "event_time,event_name,surface,num_of_sets,playerA,playerB,winner,score,round,duration_minutes," +
-      "playerATotalServicePointsWon,playerATotalServicePoints,playerBTotalServicePointsWon,playerBTotalServicePoints"
+      // first player stats
+      "a_aces,a_double_faults,a_first_serve_hits,a_first_serve_total,a_first_serve_won,a_first_serve_played,a_second_serve_won,a_second_serve_played," +
+      "a_break_points_saved,a_break_points_total,a_service_games,a_service_points_won,a_service_points_total," +
+      // second player stats
+      "b_aces,b_double_faults,b_first_serve_hits,b_first_serve_total,b_first_serve_won,b_first_serve_played,b_second_serve_won,b_second_serve_played," +
+      "b_break_points_saved,b_break_points_total,b_service_games,b_service_points_won,b_service_points_total"
+
     writeLines(fileOut, header :: matchData)
   }
 
