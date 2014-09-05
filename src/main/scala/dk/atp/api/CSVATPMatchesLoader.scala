@@ -39,7 +39,9 @@ object CSVATPMatchesLoader {
     val df = new SimpleDateFormat(DATA_FORMAT)
 
     val matchesSource = Source.fromFile(matchesDataFile)
-    val matches = matchesSource.getLines().drop(1).map(MatchComposite.fromCSVLine(_, df)).toList
+    val matches = matchesSource.getLines().drop(1).map{ line =>
+      MatchComposite.fromCSVLine(line, df)
+      }.toList
     new CSVATPMatchesLoader(matches)
   }
 
