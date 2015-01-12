@@ -10,7 +10,7 @@ class GenericATPMatchesLoader(tournamentApi: TournamentAtpApi, numOfThreads: Int
   private val logger = Logger(LoggerFactory.getLogger(getClass()))
 
   /**Loads tennis matches from http://www.atpworldtour.com/ web site.*/
-  def loadMatches(year: Int): List[MatchComposite] = {
+  def loadMatches(year: Int): List[TennisMatch] = {
 
     //not supported in Scala 2.10  collection.parallel.ForkJoinTasks.defaultForkJoinPool.setParallelism(numOfThreads)
     // read: http://stackoverflow.com/questions/5424496/scala-parallel-collections-degree-of-parallelism
@@ -20,13 +20,22 @@ class GenericATPMatchesLoader(tournamentApi: TournamentAtpApi, numOfThreads: Int
 
     val matchesComposite = filteredTournaments.par.flatMap { tournament =>
 
-        logger.info("Getting markets for tournament %s".format(tournament.tournamentName))
+      logger.info("Getting markets for tournament %s".format(tournament.tournamentName))
       val tennisMatches = tournamentApi.parseTournament(tournament.tournamentUrl)
 
       tennisMatches.par.map { tennisMatch =>
-        val matchFacts = tournamentApi.parseMatchFacts(tennisMatch.matchFactsUrl)
+        try {
+          val matchFacts = tournamentApi.parseMatchFacts(tennisMatch)
 
-        MatchComposite(tournament, tennisMatch, matchFacts)
+          TennisMatch(tournament.toTournament,
+            matchFacts.playerAFacts.playerName, matchFacts.playerBFacts.playerName, tennisMatch.score, matchFacts.winner, matchFacts.round, matchFacts.durationMinutes,
+            matchFacts.playerAFacts.toPlayerFacts, matchFacts.playerBFacts.toPlayerFacts)
+
+        } catch {
+          case e: Exception =>
+            logger.error("Error on getting match facts: %s".format(tennisMatch), e)
+            throw e
+        }
       }
     }
 

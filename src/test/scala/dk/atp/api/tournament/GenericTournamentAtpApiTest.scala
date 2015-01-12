@@ -16,14 +16,14 @@ class GenericMatchAtpApiTest {
     val tournaments = api.parseTournaments(2011)
     assertEquals(67, tournaments.size)
 
-    assertEquals(Tournament(DateTime.parse("2011-01-17").toDate(), "Australian Open Australia Grand Slams", HARD, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=580&y=2011").toString, tournaments(0).toString)
-    assertEquals(Tournament(DateTime.parse("2011-05-22").toDate(), "Roland Garros France Grand Slams", CLAY, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=520&y=2011").toString, tournaments(1).toString)
-    assertEquals(Tournament(DateTime.parse("2011-06-20").toDate(), "Wimbledon Great Britain Grand Slams", GRASS, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=540&y=2011").toString, tournaments(2).toString)
+    assertEquals(APITournament(DateTime.parse("2011-01-17").toDate(), "Australian Open Australia Grand Slams", HARD, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=580&y=2011").toString, tournaments(0).toString)
+    assertEquals(APITournament(DateTime.parse("2011-05-22").toDate(), "Roland Garros France Grand Slams", CLAY, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=520&y=2011").toString, tournaments(1).toString)
+    assertEquals(APITournament(DateTime.parse("2011-06-20").toDate(), "Wimbledon Great Britain Grand Slams", GRASS, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=540&y=2011").toString, tournaments(2).toString)
 
-    assertEquals(Tournament(DateTime.parse("2011-01-03").toDate(), "Chennai India ATP World Tour 250", HARD, 2, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=891&y=2011").toString, tournaments(5).toString)
-    assertEquals(Tournament(DateTime.parse("2011-01-10").toDate(), "Auckland New Zealand ATP World Tour 250", HARD, 2, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=301&y=2011").toString, tournaments(7).toString)
+    assertEquals(APITournament(DateTime.parse("2011-01-03").toDate(), "Chennai India ATP World Tour 250", HARD, 2, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=891&y=2011").toString, tournaments(5).toString)
+    assertEquals(APITournament(DateTime.parse("2011-01-10").toDate(), "Auckland New Zealand ATP World Tour 250", HARD, 2, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=301&y=2011").toString, tournaments(7).toString)
 
-    assertEquals(Tournament(DateTime.parse("2011-11-20").toDate(), "Barclays ATP World Tour Doubles Finals Great Britain ATP World Tour", HARD, 2, "").toString, tournaments(65).toString)
+    assertEquals(APITournament(DateTime.parse("2011-11-20").toDate(), "Barclays ATP World Tour Doubles Finals Great Britain ATP World Tour", HARD, 2, "").toString, tournaments(65).toString)
 
   }
 
@@ -32,8 +32,8 @@ class GenericMatchAtpApiTest {
     val tournaments = api.parseTournaments(2010)
     assertEquals(67, tournaments.size)
 
-    assertEquals(Tournament(DateTime.parse("2010-01-18").toDate(), "Australian Open Australia Grand Slams", HARD, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=580&y=2010").toString, tournaments(0).toString)
-    assertEquals(Tournament(DateTime.parse("2010-02-08").toDate(), "Costa Do Sauipe Brazil ATP World Tour 250", CLAY, 2, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=533&y=2010").toString, tournaments(12).toString)
+    assertEquals(APITournament(DateTime.parse("2010-01-18").toDate(), "Australian Open Australia Grand Slams", HARD, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=580&y=2010").toString, tournaments(0).toString)
+    assertEquals(APITournament(DateTime.parse("2010-02-08").toDate(), "Costa Do Sauipe Brazil ATP World Tour 250", CLAY, 2, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=533&y=2010").toString, tournaments(12).toString)
 
   }
 
@@ -74,10 +74,10 @@ class GenericMatchAtpApiTest {
 
     assertEquals(127, matches.size)
 
-    assertEquals(Match("6-0, 5-0 RET", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=0580&y=2011&r=1&p=N409").toString(), matches(0).toString())
-    assertEquals(Match("6-4, 6-0, 6-1", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=0580&y=2011&r=2&p=M680").toString(), matches(94).toString())
+    assertEquals(APIMatch2014("6-0, 5-0 RET", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=0580&y=2011&r=1&p=N409").toString(), matches(0).toString())
+    assertEquals(APIMatch2014("6-4, 6-0, 6-1", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=0580&y=2011&r=2&p=M680").toString(), matches(94).toString())
 
-    assertEquals(Match("6-4, 6-2, 6-3", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=0580&y=2011&r=7&p=D643").toString(), matches(126).toString())
+    assertEquals(APIMatch2014("6-4, 6-2, 6-3", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=0580&y=2011&r=7&p=D643").toString(), matches(126).toString())
 
   }
 
@@ -86,7 +86,7 @@ class GenericMatchAtpApiTest {
     val matchFactsUrl = "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=580&y=2011&r=1&p=N409"
     val matchFacts = api.parseMatchFacts(matchFactsUrl)
 
-    val playerAFacts = PlayerFacts("Rafael Nadal",
+    val playerAFacts = APIPlayerFacts("Rafael Nadal",
       4,
       3,
       19, 35,
@@ -95,7 +95,7 @@ class GenericMatchAtpApiTest {
       4, 4,
       5,
       25, 35)
-    val playerBFacts = PlayerFacts("Marcos Daniel",
+    val playerBFacts = APIPlayerFacts("Marcos Daniel",
       0,
       0,
       17, 26,

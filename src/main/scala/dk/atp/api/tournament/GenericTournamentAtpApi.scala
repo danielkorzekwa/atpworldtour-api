@@ -22,14 +22,14 @@ class GenericTournamentAtpApi(timeout: Int = 5000) extends TournamentAtpApi {
   /**
    * @param year
    */
-  def parseTournaments(year: Int): List[Tournament] = {
+  def parseTournaments(year: Int): List[APITournament] = {
 
     /** There are two categories: 1 - Grand slam, 2 - ATP Wourld Tour. Other categories for ATP challengers and ITF futures are ignored.*/
     val tournaments = (1 to 2).flatMap(category => parseTournamentsForCategory(category, year))
     tournaments.toList
   }
 
-  def parseTournamentsForCategory(tournamentCategory: Int, year: Int): List[Tournament] = {
+  def parseTournamentsForCategory(tournamentCategory: Int, year: Int): List[APITournament] = {
     val tournamentsUrl = "http://www.atpworldtour.com/Scores/Archive-Event-Calendar.aspx?t=%s&y=%s".format(tournamentCategory, year)
 
     val tournamentsDoc = parseUrl(tournamentsUrl)
@@ -55,7 +55,7 @@ class GenericTournamentAtpApi(timeout: Int = 5000) extends TournamentAtpApi {
       }
       val href = e.child(4).child(0).attr("href")
       val tournamentRef = if (href.isEmpty()) "" else "http://www.atpworldtour.com" + href
-    } yield Tournament(tournamentTime, tournamentName, surface, numOfSet, tournamentRef)
+    } yield APITournament(tournamentTime, tournamentName, surface, numOfSet, tournamentRef)
 
     tournaments.toList
   }
@@ -64,21 +64,33 @@ class GenericTournamentAtpApi(timeout: Int = 5000) extends TournamentAtpApi {
    * @param tournamentUrl, e.g. http://www.atpworldtour.com/Share/Event-Draws.aspx?e=580&y=2011
    *
    */
-  def parseTournament(tournamentUrl: String): List[Match] = {
+  def parseTournament(tournamentUrl: String): List[APIMatch] = {
     val doc = parseUrl(tournamentUrl)
     val scoreDocs = doc.getElementsByClass("scores").filter(score => score.getElementsByTag("a").size() == 1)
     val matches = for {
       scoreDoc <- scoreDocs
       val scoreValue = scoreDoc.child(0).text
+      
       val matchStatsUrl = "http://www.atpworldtour.com" + (scoreDoc.child(0).attr("href").split("'")(1))
-    } yield Match(scoreValue, matchStatsUrl)
+    } yield APIMatch2014(scoreValue, matchStatsUrl)
     matches.toList
   }
 
+  
+  
+   def parseMatchFacts(tennisMatch:APIMatch): APIMatchFacts = {
+      val matchFacts = tennisMatch match {
+      case tennisMatch:APIMatch2014 =>parseMatchFacts(tennisMatch.matchFactsUrl)
+      
+    }
+      matchFacts
+   }
+  
+   
   /**
    * @param matchFactsUrl e.g. http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=580&y=2011&r=1&p=N409
    */
-  def parseMatchFacts(matchFactsUrl: String): MatchFacts = {
+  def parseMatchFacts(matchFactsUrl: String): APIMatchFacts = {
 
     val matchStatsDoc = parseUrl(matchFactsUrl)
 
@@ -119,7 +131,7 @@ class GenericTournamentAtpApi(timeout: Int = 5000) extends TournamentAtpApi {
 
     val List(winner, playerA, playerB) = matchStatsDoc.getElementsByClass("playerName").map(e => e.text).toList
 
-    MatchFacts(PlayerFacts(playerA,
+    APIMatchFacts(APIPlayerFacts(playerA,
       playerAAces,
       playerADoubleFaults,
       playerAFirstServeHits, playerAFirstServeTotal,
@@ -128,7 +140,7 @@ class GenericTournamentAtpApi(timeout: Int = 5000) extends TournamentAtpApi {
       playerABreakPointsSaved, playerABreakPointsTotal,
       playerAServiceGames,
       playerATotalServicePointsWon, playerATotalServicePoints),
-      PlayerFacts(playerB,
+      APIPlayerFacts(playerB,
         playerBAces,
         playerBDoubleFaults,
         playerBFirstServeHits, playerBFirstServeTotal,

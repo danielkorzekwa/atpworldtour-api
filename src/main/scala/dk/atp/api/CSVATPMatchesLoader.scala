@@ -15,7 +15,7 @@ object CSVATPMatchesLoader {
   private val DATA_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS"
 
   /**Writes matches data to csv file.*/
-  def toCSVFile(matches: List[MatchComposite], matchesDataFile: String) {
+  def toCSVFile(matches: List[TennisMatch], matchesDataFile: String) {
 
     val df = new SimpleDateFormat(DATA_FORMAT)
 
@@ -40,13 +40,13 @@ object CSVATPMatchesLoader {
 
     val matchesSource = Source.fromFile(matchesDataFile)
     val matches = matchesSource.getLines().drop(1).map{ line =>
-      MatchComposite.fromCSVLine(line, df)
+      TennisMatch.fromCSVLine(line, df)
       }.toList
     new CSVATPMatchesLoader(matches)
   }
 
 }
 
-class CSVATPMatchesLoader(matches: List[MatchComposite]) extends ATPMatchesLoader {
-  def loadMatches(year: Int): List[MatchComposite] = matches.filter(m => new DateTime(m.tournament.tournamentTime).getYear() == year)
+class CSVATPMatchesLoader(matches: List[TennisMatch]) extends ATPMatchesLoader {
+  def loadMatches(year: Int): List[TennisMatch] = matches.filter(m => new DateTime(m.tournament.tournamentTime).getYear() == year)
 }

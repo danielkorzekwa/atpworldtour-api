@@ -11,6 +11,6 @@ import java.text.SimpleDateFormat
 
 trait ATPMatchesLoader {
 
-  def loadMatches(year: Int): List[MatchComposite]
+  def loadMatches(year: Int): List[TennisMatch]
 
 }

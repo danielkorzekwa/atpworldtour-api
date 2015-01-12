@@ -97,10 +97,9 @@ class CSVATPMatchesLoaderTest {
     assertEquals(2944, csvMatchLoader.loadMatches(2011).size)
     assertEquals(0, csvMatchLoader.loadMatches(2012).size)
 
-    val tournament = Tournament(DateTime.parse("2010-01-03T00:00:00").toDate(), "Brisbane Australia ATP World Tour 250", HARD, 2, "n/a")
-    val tennisMatch = Match("6-7(3); 7-6(5); 7-5", "n/a")
+    val tournament = Tournament(DateTime.parse("2010-01-03T00:00:00").toDate(), "Brisbane Australia ATP World Tour 250", HARD, 2)
 
-    val serraFacts = PlayerFacts("Florent Serra",
+    val serraFacts = PlayerFacts(
       9,
       1,
       67, 107,
@@ -109,7 +108,7 @@ class CSVATPMatchesLoaderTest {
       2, 5,
       18,
       74, 107)
-    val reisterFacts = PlayerFacts("Julian Reister",
+    val reisterFacts = PlayerFacts(
       7,
       1,
       105, 143,
@@ -119,22 +118,20 @@ class CSVATPMatchesLoaderTest {
       18,
       88, 143)
 
-    val matchFacts = MatchFacts(serraFacts, reisterFacts, "Florent Serra", "R32", 160)
+    val tennisMatch = TennisMatch(tournament, "Florent Serra", "Julian Reister", "6-7(3); 7-6(5); 7-5", "Florent Serra", "R32", 160, serraFacts, reisterFacts)
 
     assertEquals(tournament.toString, csvMatchLoader.loadMatches(2010)(10).tournament.toString)
-    assertEquals(tennisMatch.toString, csvMatchLoader.loadMatches(2010)(10).tennisMatch.toString)
-    assertEquals(matchFacts.toString, csvMatchLoader.loadMatches(2010)(10).matchFacts.toString)
+    assertEquals(tennisMatch.toString, csvMatchLoader.loadMatches(2010)(10).toString)
 
     /**Check numOFSets*/
-    val tournament2 = Tournament(DateTime.parse("2010-01-18T00:00:00").toDate(), "Australian Open Australia Grand Slams", HARD, 3, "n/a")
+    val tournament2 = Tournament(DateTime.parse("2010-01-18T00:00:00").toDate(), "Australian Open Australia Grand Slams", HARD, 3)
     assertEquals(tournament2.toString, csvMatchLoader.loadMatches(2010)(155).tournament.toString)
   }
 
-  private def matchComposite(eventTime: DateTime, playerAName: String = "Rafael Nadal", playerBName: String = "Marcos Daniel"): MatchComposite = {
-    val tournament = Tournament(eventTime.toDate(), "Australian Open Australia Grand Slams", HARD, 3, "http://www.atpworldtour.com/Share/Event-Draws.aspx?e=580&y=2011")
-    val tennisMatch = Match("6-0, 5-0 RET", "http://www.atpworldtour.com/Share/Match-Facts-Pop-Up.aspx?t=580&y=2011&r=1&p=N409")
+  private def matchComposite(eventTime: DateTime, playerAName: String = "Rafael Nadal", playerBName: String = "Marcos Daniel"): TennisMatch = {
+    val tournament = Tournament(eventTime.toDate(), "Australian Open Australia Grand Slams", HARD, 3)
 
-    val playerAFacts = PlayerFacts(playerAName,
+    val playerAFacts = PlayerFacts(
       1,
       2,
       3, 4,
@@ -143,7 +140,7 @@ class CSVATPMatchesLoaderTest {
       9, 10,
       11,
       25, 35)
-    val playerBFacts = PlayerFacts(playerBName,
+    val playerBFacts = PlayerFacts(
       12,
       13,
       14, 15,
@@ -152,7 +149,9 @@ class CSVATPMatchesLoaderTest {
       20, 21,
       22,
       2, 26)
-    val matchFacts = MatchFacts(playerAFacts, playerBFacts, "Rafael Nadal", "R128", 56)
-    MatchComposite(tournament, tennisMatch, matchFacts)
+
+    val tennisMatch = TennisMatch(tournament, playerAName, playerBName, "6-0, 5-0 RET", "Rafael Nadal", "R128", 56, playerAFacts, playerBFacts)
+    tennisMatch
+
   }
 }
